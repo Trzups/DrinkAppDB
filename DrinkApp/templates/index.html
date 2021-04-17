@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form method="POST" class="card card-sm">
+                {% csrf_token %}
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="text" name="drink"
+                            placeholder="Cocktail Name ">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-info" type="submit"> Search </button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-info" name="random_cocktail" type="submit">Random</button>
+                    </div>
+                </div>
+            </form>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% for drink in drinks %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="d-flex justify-content-center">{{drink.drink_name}}</h2>
+            <h5>Instruction:</h5>
+            <p>{{drink.drink_instruction}}</p>
+            <h5>Glass:</h5>
+            <p>{{drink.drink_glass}}</p>
+            <h5>Category:</h5>
+            <p>{{drink.drink_category}}</p>
+            <div class="row">
+                <div class="col">
+                    <h5>Ingredient:</h5>
+                    {% for ingredient_key, ingredient_value in drink.drink_ingredient.items %}
+                    <p><strong>{{ ingredient_key|default_if_none:""}} </strong>{{ ingredient_value|default_if_none:""}}
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <img src='{{drink.drink_image}}'>
+        </div>
+    </div>
+</div>
+<br>
+{% endfor %}
+{% endblock %}
