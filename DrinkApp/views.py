@@ -1,17 +1,28 @@
 from django.shortcuts import render, redirect
 import requests
+from requests.exceptions import HTTPError
 from django.http import HttpResponse
 from django.contrib import messages
 
 
 def index(request):
     if 'random_cocktail' in request.POST:
-        drink = get_random_drink()
+        random_drink = get_random_drink()
+        try:
+            random_drink.raise_for_status()
+        except HTTPError as http_error:
+            return HttpResponse(f'HTTP error occurred: {http_error}')
+        drink = random_drink.json()
         drink_view = get_view_drink(drink)
         return render(request, 'index.html', drink_view)
     if request.method == 'POST':
         drink_name = request.POST['drink']
         drink = get_drink(drink_name)
+        try:
+            drink.raise_for_status()
+        except HTTPError as http_error:
+            return HttpResponse(f'HTTP error occurred: {http_error}')
+        drink = drink.json()
         if drink['drinks'] is None:
             messages.error(request, 'Drink does not exist in the database')
             return redirect('index')
@@ -21,14 +32,9 @@ def index(request):
         return render(request, 'index.html')
 
 
-
 def get_drink(drink_name):
-        url = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/search.php?s={drink_name}')
-        try:
-            url.raise_for_status()
-        except:
-            return HttpResponse('Drink does not exist in the database')
-        return url.json()
+    drink = requests.get(f'https://www.thecocktaildb.com/api/json/v1/1/search.php?s={drink_name}')
+    return drink
 
 
 def get_view_drink(drink):
@@ -38,12 +44,8 @@ def get_view_drink(drink):
 
 
 def get_random_drink():
-    random_cocktail_request = requests.get('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-    try:
-        random_cocktail_request.raise_for_status()
-    except:
-        return HttpResponse('Cocktail database does not exist')
-    return random_cocktail_request.json()
+    random_drink_request = requests.get('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    return random_drink_request
 
 
 def view_drink(drinks):
