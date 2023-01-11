@@ -1,6 +1,7 @@
 # DrinkAppDB
 
 ## Table of contents
+
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
@@ -8,17 +9,19 @@
 * [Status](#status)
 
 ## General info
-DrinkAppDB is an application with which you can find interesting recipes for alcoholic drinks. By entering the name of the drink, a list with a photo and a recipe will be displayed.
+
+DrinkAppDB is an application with which you can find interesting recipes for alcoholic drinks. By entering the name of
+the drink, a list with a photo and a recipe will be displayed.
 This project uses data from "TheCocktailDB" - https://www.thecocktaildb.com/
 
-
 ## Technologies
+
 * Python version 3.6 ( Using library 'requests' )
 * Django version 3.2
 * Bootstrap version 5.0
 
-
 ## Setup
+
 ```
 # 1. To run this project, create a virtual environment and clone the repository.
 $ https://github.com/Trzups/DrinkAppDB.git
@@ -41,5 +44,5 @@ A page should appear where you will be prompted to enter the name of the drink y
 
 After typing an interesting drink
 
-![Algorithm schema](./img/screen_3.png)
+![Algorithm schema](./img/screen_2.png)
 
