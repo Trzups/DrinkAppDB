@@ -43,9 +43,3 @@ After typing an interesting drink
 
 ![Algorithm schema](./img/screen_3.png)
 
-## Features
-TO-DO list :
-- Using API to translate displayed drinks.
-
-## Status
-Project is in progress
