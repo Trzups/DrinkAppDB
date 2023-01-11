@@ -67,7 +67,6 @@ def get_drink_ingredient(drink):
     drink_ingredient = {}
     max_ingredient = 16
     for item in range(1, max_ingredient, 1):
-        if (drink[f'strIngredient{item}']) != None :
-                drink_ingredient[(drink[f'strIngredient{item}'])] = (drink[f"strMeasure{item}"])
+        if (drink[f'strIngredient{item}']) != None:
+            drink_ingredient[(drink[f'strIngredient{item}'])] = (drink[f"strMeasure{item}"])
     return drink_ingredient
-

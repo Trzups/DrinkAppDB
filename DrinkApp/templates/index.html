@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-            <form method="POST" class="card card-sm">
+            <form method="POST">
                 {% csrf_token %}
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
@@ -11,10 +11,10 @@
                     </div>
                     <div class="col">
                         <input class="form-control form-control-lg form-control-borderless" type="text" name="drink"
-                            placeholder="Cocktail Name ">
+                               placeholder="Cocktail Name ">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-info" type="submit"> Search </button>
+                        <button class="btn btn-info" type="submit"> Search</button>
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-info" name="random_cocktail" type="submit">Random</button>
@@ -30,33 +30,32 @@
             {% endif %}
         </div>
     </div>
-</div>
-{% for drink in drinks %}
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <h2 class="d-flex justify-content-center">{{drink.drink_name}}</h2>
-            <h5>Instruction:</h5>
-            <p>{{drink.drink_instruction}}</p>
-            <h5>Glass:</h5>
-            <p>{{drink.drink_glass}}</p>
-            <h5>Category:</h5>
-            <p>{{drink.drink_category}}</p>
+    {% for drink in drinks %}
+    <div class="container">
+        <div class="card">
             <div class="row">
-                <div class="col">
-                    <h5>Ingredient:</h5>
+                <div class="col-sm">
+                    <h1 class="d-flex justify-content-center">{{drink.drink_name}}</h1>
+                    <br>
+                    <h5><strong>Instruction:</strong></h5>
+                    <p>{{drink.drink_instruction}}</p>
+                    <h5><strong>Glass:</strong></h5>
+                    <p>{{drink.drink_glass}}</p>
+                    <h5><strong>Category:</strong></h5>
+                    <p>{{drink.drink_category}}</p>
+                    <h5><strong>Ingredient:</strong></h5>
                     {% for ingredient_key, ingredient_value in drink.drink_ingredient.items %}
                     <p><strong>{{ ingredient_key|default_if_none:""}} </strong>{{ ingredient_value|default_if_none:""}}
                     </p>
                     {% endfor %}
                 </div>
+                <div class="col-6">
+                    <img src='{{drink.drink_image}}'>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            <img src='{{drink.drink_image}}'>
-        </div>
     </div>
+    <br>
+    {% endfor %}
 </div>
-<br>
-{% endfor %}
 {% endblock %}
